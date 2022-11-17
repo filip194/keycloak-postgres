@@ -1,9 +1,7 @@
 version: '3.8'
-
 networks:
   application:
     driver: bridge
-
 services:
   postgres:
     container_name: keycloak_postgres
@@ -33,13 +31,14 @@ services:
         limits:
           cpus: '0.2'
           memory: 256M
-
   keycloak-authorization-server:
     container_name: keycloak-server
     image: quay.io/keycloak/keycloak:${KEYCLOAK_VERSION:-latest}
-    entrypoint: ["/opt/keycloak/bin/kc.sh", "start-dev"]
+    entrypoint: [ "/opt/keycloak/bin/kc.sh", "start-dev", "--http-port", "9091" ]
     ports:
-      - "9091:8080"
+      - "9091:9091"
+    volumes:
+      - ./keycloak/realms/export:/tmp/export
     environment:
       - "KEYCLOAK_ADMIN=admin"
       - "KEYCLOAK_ADMIN_PASSWORD=admin"
@@ -50,11 +49,11 @@ services:
       - "KC_DB_SCHEMA=public" # only public schema works?
       - "KC_DB_URL_DATABASE=keycloak" # database to use
       - "KC_DB_URL_HOST=postgres" # postgres service defined above
+      - "KC_DB_URL_PORT=5432"
     depends_on:
       - postgres
     networks:
       - ${GLOBAL_NETWORK:-postgres}
-
 volumes:
   postgres_data:
     driver: local
