@@ -32,7 +32,7 @@ Export/Import REALM and USERS:
 - https://keepgrowing.in/tools/keycloak-in-docker-5-how-to-export-a-realm-with-users-and-secrets/
 - https://keepgrowing.in/tools/keycloak-in-docker-6-how-to-import-realms-from-a-directory/
 
-### Keycloak v17 OR HIGHER:
+### Keycloak v17 or higher:
 
 - https://www.keycloak.org/server/importExport
 
